@@ -18,10 +18,11 @@ const schema = yup.object().shape({
     .string()
     .email("Email should have correct format")
     .required("Email is a required field"),
-  // phoneNumber: yup
-  //   .number()
-  //   .required("Phone is a required field") 
-  //ОТОБРАЗИТЬ 
+  phoneNumber: yup
+    .number()
+    // .matches('^[0-9]+$', 'Phone must contain only numbers')
+    .required("Phone is a required field"),
+  //ОТОБРАЗИТЬ
 });
 
 const normalizePhoneNumber = (value) => {
@@ -51,11 +52,7 @@ export const Step2 = () => {
     mode: "onBlur",
     resolver: yupResolver(schema),
   });
-  const hasPhone =
-    //'hasPhone'
-    watch("hasPhone"
-    //,data.hasPhone
-    );
+  const hasPhone = watch("hasPhone");
 
   const onSubmit = (data) => {
     history.push("./result");
@@ -78,45 +75,18 @@ export const Step2 = () => {
           helperText={errors?.email?.message}
           required
         />
-        {/* <Controller
-          name={"hasPhone"}
-          control={control}
-          render={({ field:{ onChange }}) => (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  // onChange={data.hasPhone
-                  // (e) => field.onChange(e.target.checked)
-                  // }
-                  //checked={data.hasPhone}
-                  //defaultChecked={data.hasPhone}
-                  //defaultValue={data.hasPhone}
-                  color="primary"
-                   onChange={onChange(data.hasPhone)}
-                  // inputRef={data}
-                  // {...props}
-                  // checked={props.value}
-                  // onChange={(e) => props.onChange(e.target.checked)}
-                />
-              }
-              label="Do you have a phone"
-            />
-          )}
-        /> */}
-        <input type="checkbox"  {...register("hasPhone")} />
 
+        <input type="checkbox" {...register("hasPhone")} />
 
         {hasPhone && (
           <Input
-            {...register("phoneNumber"
-            // ,{ required: 'required field'}
-            )}
+            {...register("phoneNumber")}
             id="phoneNumber"
             type="tel"
             label="Phone Number"
             name="phoneNumber"
-            //error={!!errors?.phoneNumber}
-            //helperText={errors?.phoneNumber?.message}
+            error={!!errors?.phoneNumber}
+            helperText={errors?.phoneNumber?.message}
             onChange={(e) => {
               e.target.value = normalizePhoneNumber(e.target.value);
             }}

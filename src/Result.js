@@ -14,11 +14,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InsertDriveFile from "@material-ui/icons/InsertDriveFile";
 
 const useStyles = makeStyles({
   root: {
@@ -30,35 +25,31 @@ const useStyles = makeStyles({
 });
 
 export const Result = () => {
+  const URL = "http://localhost:4000/"
   const [success, setSuccess] = useState(false);
   const styles = useStyles();
   const { data } = useData();
   const history = useHistory();
 
    const entries = Object.entries(data).filter((entry) => entry[0] !== "files");
-  //const { files } = data;
+  
 
   const onSubmit = async () => {
     const formData = new FormData();
-    console.log(data)
-    //history.push("./");
-    // if (data.files) {
-    //   data.files.forEach((file) => {
-    //     formData.append("files", file, file.name);
-    //   });
-    // }
+    alert(JSON.stringify(data))
+ 
 
     entries.forEach((entry) => {
       formData.append(entry[0], entry[1]);
     });
 
-    const res = await fetch("http://localhost:4000/", {
+    const res = await fetch(URL, {
       method: "POST",
-      body: formData, //formData data
+      body: formData, 
     });
 
     if (res.status === 200) {
-      Swal.fire("Great job!", "You've passed the challenge!", "success");
+      Swal.fire("Thank You!", "You've passed the challenge!", "success");
       setSuccess(true);
     }
   };
@@ -89,7 +80,7 @@ export const Result = () => {
                   </TableCell>
                   <TableCell align="right">
                     {entry[1]
-                    //.toString()
+                    .toString()
                     }
                   </TableCell>
                 </TableRow>
@@ -97,24 +88,6 @@ export const Result = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        {/* {
-        files && (
-          <>
-            <Typography component="h2" variant="h5">
-              📦 Files
-            </Typography>
-            <List>
-              {files.map((f, index) => (
-                <ListItem key={index}>
-                  <ListItemIcon>
-                    <InsertDriveFile />
-                  </ListItemIcon>
-                  <ListItemText primary={f.name} secondary={f.size} />
-                </ListItem>
-              ))}
-            </List>
-          </>
-        )} */}
         <PrimaryButton onClick={onSubmit}>Submit</PrimaryButton>
         <Link to="/">Start over</Link>
       </MainContainer>
