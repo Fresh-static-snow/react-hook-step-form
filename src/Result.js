@@ -31,7 +31,7 @@ export const Result = () => {
   const { data } = useData();
   const history = useHistory();
 
-   const entries = Object.entries(data).filter((entry) => entry[0] !== "files");
+   const entries = Object.entries(data)
   
 
   const onSubmit = async () => {
@@ -49,7 +49,7 @@ export const Result = () => {
     });
 
     if (res.status === 200) {
-      Swal.fire("Thank You!", "You've passed the challenge!", "success");
+      Swal.fire("Thank You!", "Order is on the way!", "success");
       setSuccess(true);
     }
   };

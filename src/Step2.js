@@ -18,12 +18,7 @@ const schema = yup.object().shape({
     .string()
     .email("Email should have correct format")
     .required("Email is a required field"),
-  phoneNumber: yup
-    .number()
-    // .matches('^[0-9]+$', 'Phone must contain only numbers')
-    .required("Phone is a required field"),
-  //ОТОБРАЗИТЬ
-});
+})
 
 const normalizePhoneNumber = (value) => {
   const phoneNumber = parsePhoneNumberFromString(value);
